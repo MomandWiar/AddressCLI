@@ -23,22 +23,27 @@ public class PostCodeClient implements CommandLineRunner {
         System.out.println("(type 'exit' to stop)");
 
         while(true) {
+            // Prompt user for 'postcode' and 'houseNumber'
             String postcode = getAddressInfo("Postcode: ", scanner);
             String houseNumber = getAddressInfo("houseNumber: ", scanner);
 
+            // Exit condition
             if ("exit".equalsIgnoreCase(postcode) || "exit".equalsIgnoreCase(houseNumber)) {
                 System.exit(0);
             }
 
             try {
+                // Call PostCodeService to get address information
                 ResponseEntity<String> response = postCodeService.getAddress(postcode, houseNumber);
                 System.out.println(response.getBody());
             } catch (HttpClientErrorException | HttpServerErrorException e) {
+                // Error handling
                 System.out.println("Something went wrong, " + e.getStatusCode());
             }
         }
     }
 
+    // Helper method to get user input
     private String getAddressInfo(String prompt, Scanner scanner) {
         System.out.print(prompt);
         return scanner.nextLine();
