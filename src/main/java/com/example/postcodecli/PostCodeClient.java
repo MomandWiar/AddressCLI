@@ -1,5 +1,7 @@
 package com.example.postcodecli;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,8 @@ import java.util.Scanner;
 
 @Component
 public class PostCodeClient implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(PostCodeClient.class);
 
     PostCodeService postCodeService;
 
@@ -38,7 +42,7 @@ public class PostCodeClient implements CommandLineRunner {
                 System.out.println(response.getBody());
             } catch (HttpClientErrorException | HttpServerErrorException e) {
                 // Error handling
-                System.out.println("Something went wrong, " + e.getStatusCode());
+                logger.error("Whoops, something went wrong. {}", e.getStatusCode());
             }
         }
     }

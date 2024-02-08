@@ -1,5 +1,7 @@
 package com.example.postcodecli;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +14,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class PostCodeService {
 
+    private static final Logger logger = LoggerFactory.getLogger(PostCodeService.class);
+
     @Value("${application.baseURL}")
     private String baseURL;
 
@@ -22,7 +26,7 @@ public class PostCodeService {
     public ResponseEntity<String> getAddress(String postcode, String houseNumber) {
         RestTemplate restTemplate = new RestTemplate();
 
-        // Construct URI for with postcode and houseNumber
+        // Construct URI with postcode and houseNumber
         String URI = UriComponentsBuilder.fromUriString(baseURL)
                 .queryParam("postcode", postcode)
                 .queryParam("number", houseNumber)
@@ -35,6 +39,9 @@ public class PostCodeService {
 
         // Set HTTP entity
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+        // Log the retrieval from external API
+        logger.info("Response retrieved from external API");
 
         // Make the get request and return response
         return restTemplate.exchange(URI, HttpMethod.GET, entity, String.class);
