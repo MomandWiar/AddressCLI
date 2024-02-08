@@ -2,6 +2,7 @@ package com.example.addresscli;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,29 +17,36 @@ public class AddressService {
 
     private static final Logger logger = LoggerFactory.getLogger(AddressService.class);
 
-    @Value("${application.baseURL}")
-    private String baseURL;
+    private final String baseURL;
+    private final HttpEntity<String> entity;
+    private final RestTemplate restTemplate;
 
-    @Value("${application.accessToken}")
-    private String accessToken;
+    @Autowired
+    public AddressService(@Value("${application.baseURL}") String baseURL,
+                          @Value("${application.accessToken}") String accessToken) {
+
+        // Set baseURL
+        this.baseURL = baseURL;
+
+        // Initialize headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+        headers.set("Content-Type", "application/json");
+
+        // Initialize HTTP entity
+        this.entity = new HttpEntity<>("parameters", headers);
+
+        // Initialize RestTemplate
+        this.restTemplate = new RestTemplate();
+    }
 
     // Method to get address information with external API
     public ResponseEntity<String> getAddress(String postcode, String houseNumber) {
-        RestTemplate restTemplate = new RestTemplate();
-
         // Construct URI with postcode and houseNumber
         String URI = UriComponentsBuilder.fromUriString(baseURL)
                 .queryParam("postcode", postcode)
                 .queryParam("number", houseNumber)
                 .build().toUriString();
-
-        // Set HTTP headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + accessToken);
-        headers.set("Content-Type", "application/json");
-
-        // Set HTTP entity
-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
         // Log the retrieval from external API
         logger.info("Response retrieved from external API");
