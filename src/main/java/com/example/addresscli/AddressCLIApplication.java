@@ -1,13 +1,13 @@
-package com.example.postcodecli;
+package com.example.addresscli;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PostCodeCliApplication {
+public class AddressCLIApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PostCodeCliApplication.class, args);
+        SpringApplication.run(AddressCLIApplication.class, args);
     }
 
 }

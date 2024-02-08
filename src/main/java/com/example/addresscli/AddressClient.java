@@ -1,4 +1,4 @@
-package com.example.postcodecli;
+package com.example.addresscli;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +11,14 @@ import org.springframework.web.client.HttpServerErrorException;
 import java.util.Scanner;
 
 @Component
-public class PostCodeClient implements CommandLineRunner {
+public class AddressClient implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(PostCodeClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddressClient.class);
 
-    PostCodeService postCodeService;
+    AddressService addressService;
 
-    public PostCodeClient (PostCodeService postCodeService) {
-        this.postCodeService = postCodeService;
+    public AddressClient(AddressService addressService) {
+        this.addressService = addressService;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class PostCodeClient implements CommandLineRunner {
 
             try {
                 // Call PostCodeService to get address information
-                ResponseEntity<String> response = postCodeService.getAddress(postcode, houseNumber);
+                ResponseEntity<String> response = addressService.getAddress(postcode, houseNumber);
                 System.out.println(response.getBody());
             } catch (HttpClientErrorException | HttpServerErrorException e) {
                 // Error handling

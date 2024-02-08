@@ -1,10 +1,10 @@
-package com.example.postcodecli;
+package com.example.addresscli;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PostCodeCliApplicationTests {
+class AddressCLIApplicationTests {
 
     @Test
     void contextLoads() {

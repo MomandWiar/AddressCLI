@@ -1,4 +1,4 @@
-package com.example.postcodecli;
+package com.example.addresscli;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
-public class PostCodeService {
+public class AddressService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PostCodeService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddressService.class);
 
     @Value("${application.baseURL}")
     private String baseURL;
